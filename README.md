@@ -1,6 +1,6 @@
 # SimpleDB
 Database Homework of Berkeley University: Implement A Simple Database Management System 
-**You can get more details in https://sites.google.com/site/cs186fall2013/homeworks**
+**(You can get more details in https://sites.google.com/site/cs186fall2013/homeworks)**
 
 ## Details
 proj1-proj4依次实现了数据存储、数据操作、查询优化和事务管理，每个project是在上一个project的基础上完成的，所以本项目的完整代码在proj4。
