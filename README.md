@@ -3,21 +3,10 @@ Database Homework of Berkeley University: Implement A Simple Database Management
 
 ## Details
 **You can get more details in https://sites.google.com/site/cs186fall2013/homeworks**
-
-### CS186 Project 1: SimpleDB
-In the project assignments in CS186, you will write a basic database management system called SimpleDB. For this project, you will focus on implementing the core modules required to access stored data on disk; in future projects, you will add support for various query processing operators, as well as transactions, locking, and concurrent queries.
-
-SimpleDB is written in Java. We have provided you with a set of mostly unimplemented classes and interfaces. You will need to write the code for these classes. We will grade your code by running a set of system tests written using JUnit. We have also provided a number of unit tests that you may find useful in verifying that your code works.
-
-### CS186 Project 2: SimpleDB Operators
-In this project, you will write a set of operators for SimpleDB to implement table modifications (e.g., insert and delete records), selections, joins, and aggregates. These will build on top of the foundation that you wrote in Project 1 to provide you with a database system that can perform simple queries over multiple tables.
-
-Additionally, we ignored the issue of buffer pool management in Project 1: we have not dealt with the problem that arises when we reference more pages than we can fit in memory over the lifetime of the database. In Project 2, you will design an eviction policy to flush stale pages from the buffer pool.
-
-You do not need to implement transactions or locking in this project.
-
-### CS186 Project 3: Query Optimization
-In this project, you will implement a query optimizer on top of SimpleDB. The main tasks include implementing a selectivity estimation framework and a cost-based optimizer. You have freedom as to exactly what you implement, but we recommend using something similar to the Selinger cost-based optimizer discussed in class. The remainder of this document describes what is involved in adding optimizer support and provides a basic outline of how you might add this support to your database. 
-
-### CS186 Project 4: SimpleDB Transactions
-In this project, you will implement a simple locking-based transaction system in SimpleDB. You will need to add lock and unlock calls at the appropriate places in your code, as well as code to track the locks held by each transaction and grant locks to transactions as they are needed. 
+proj1-proj4依次实现了数据存储、数据操作、查询优化和事务管理，每个project是在上一个project的基础上完成的，所以本项目的完整代码在proj4。
+### 存储
+	每个table存储了多个page，page中有位图与用来存放tuple的slots，位图记录相应slot是否被占用，在添加和删除tuple时修改相应bit（采用大端法）。每个table对应一个磁盘文件，读取磁盘上指定的page时需要计算字节偏移量。本数据库支持缓存，使用LRU替换算法。
+### 操作
+	支持常用数据库操作，并实现了基于代价估算的查询优化，其中对于每个table构造直方图计算Filter Selectivity。用动态规划算法得到left-deep tree，join时采用了排序合并算法。
+### 事务
+	事务管理实现了NO STEAL/FORCE，因此不需要事务的重做与撤销。事务锁实现了严格两段锁协议，粒度为page，使用了资源等待图法进行死锁检测。
