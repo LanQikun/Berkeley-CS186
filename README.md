@@ -25,6 +25,6 @@ proj1-proj4依次实现了数据存储、数据操作、查询优化和事务管
 
 默认数据库表的catalog必须和.dat文件同一目录下。
 
-JoinOptimizer.computeCostAndCardOfSubplan中，当cost2<cost1时，没有交换card
+JoinOptimizer.computeCostAndCardOfSubplan中，当cost2<cost1时，没有交换card。
 
-在一些测试中，本该使用table的alias时未使用
+在一些测试中，本该使用table的alias时未使用。
