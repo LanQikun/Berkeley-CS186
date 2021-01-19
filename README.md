@@ -2,29 +2,41 @@
 Database Homework of Berkeley University: Implement A Simple Database Management System 
 **(You can get more details in https://sites.google.com/site/cs186fall2013/homeworks)**
 
-## Details
-proj1-proj4依次实现了数据存储、数据操作、查询优化和事务管理，每个project是在上一个project的基础上完成的，所以本项目的完整代码在proj4。
-### 存储
-每个table存储了多个page，page中有位图与用来存放tuple的slots，位图记录相应slot是否被占用，在添加和删除tuple时修改相应bit（采用大端法）。每个table对应一个磁盘文件，读取磁盘上指定的page时需要计算字节偏移量。本数据库支持缓存，使用LRU替换算法。
-### 操作
-支持常用数据库操作，并实现了基于代价估算的查询优化。用动态规划算法得到left-deep tree，join时采用了排序合并算法。
-### 事务
-事务管理实现了NO STEAL/FORCE，因此不需要事务的重做与撤销。事务锁实现了严格两段锁协议，粒度为page，使用了资源等待图法进行死锁检测。
+The course consists of four projects that implement four core parts in the database:
 
-## 本人改动的部分
-在cache中使用了LRU算法，以双端链表实现。
+**Project 1**: Implementing data management. This part is mainly to realize the management of data. Of course, it is necessary to set up the development environment and understand the overall framework of SimpleDB under the guidance. More specifically, it is necessary to implement storage, access and management of physical level data (binary files) and map it to logical level data (relational tables). At the end of this project, the most basic operation in SimpleDB, SeqScan, is also required. So after completing this project, you can scan the entire table.
 
-在多表联接中使用了排序合并算法。
+**Project 2**: Implementing the operators. In this project, you will implements a series of database operators, including `insert`, `delete`, `select`, `join`, `group by`, `order by`, and so on. It is worth noting that implementing a highly efficienct version of `join` is the main and difficult question (but don't worry, you just need to learn some common algorithms, there are recommended articles at the end of this article). Plus, the `group by` and `order by` functions in SimpleDB have been simplified, so some work is actually saved. At the end of the project, we need to implement the cache management, a function that is not completed in project 1. You will learn and implement the caching mechanism, including the cache replacement algorithms (LRU, etc.).
 
-使用了资源等待图法判断死锁。
+**Project 3**: Implementing query optimization. In this project, you need to implement the cost-based optimizer. What is most difficult is to use the left-deep-tree and the idea of dynamic programming to implement the `Join` operation optimizer. Once completed, the performance of `Filter`,i.e. the SQL `where` clause, and `Join` operations will be greatly optimized.
 
-## 课程原有的Bug
-没有指明page number是从0开始的整数。
 
-在加载table文件时默认是绝对路径，没有处理相对路径的情况。
+**project 4**: Implementing transaction management. In this project, you need to implement transaction management of SimpleDB, including using 2PL protocol and NO STEAL/FORCE cache management strategy to enable ACID properties of transaction with page-level locking, and deadlock detection and abortion based on a simple timeout policy or cycle-detection in a dependency graph data structure (I implemented the latter one). Due to the use of NO STEAL/FORCE strategy, the log-based recovery, i.e. undo and redo functions, are omitted.
 
-默认数据库表的catalog必须和.dat文件同一目录下。
+## Requirement of the Course
 
-JoinOptimizer.computeCostAndCardOfSubplan中，当cost2<cost1时，没有交换card。
+1. The projects require few knowledge of database, but in project 4, you might have to learn some concepts of transaction management through google or relevant books. Also, the references I recommend at the end of this article might help.
 
-在一些测试中，本该使用table的alias时未使用。
+2. You need to know the basic grammar of Java, and it would be better if you have learned concurrency in Java (needed in Project 4). Additionally, I change Ant (which is recommended by the course) to Maven, so if you would like to run my code, you will also need to learn some basic concept in Maven (e.g. the use of POM file).
+
+3. It takes about one month to complete the whole four projects.
+
+What is more, when implementing the project 4, it is recommended to learn the concepts about transaction management systematically, especially ACID properties, the priority of read/write lock, 2PL protocol, etc.
+
+## What I modified
+The cache is implemented by double-ended queue, and it uses LRU page replacement algorithm.
+
+The join of multiple tables is based on by Merge Sort.
+
+The deadlock detection is based on resource allocation graph.
+
+## Problems in the course original code
+It dose not indicate that page number is a integer start from 0.
+
+It only use direct path to load table files.
+
+The catalog of database table and .dat files should be in the same directory.
+
+It does not exchange card when cost2<cost1 in JoinOptimizer.computeCostAndCardOfSubplan.
+
+In some tests, the table alias are missed.
