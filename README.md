@@ -26,7 +26,7 @@ You need to know the basic grammar of Java, and it would be better if you have l
 
 3. The deadlock detection is based on dependency graph data structure.
 
-## Problems in the course original code
+## Problems I encountered
 1. It dose not indicate that page number is a integer start from 0.
 
 2. It only use direct path to load table files.
