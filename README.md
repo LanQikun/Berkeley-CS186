@@ -2,6 +2,7 @@
 Database Homework of Berkeley University: Implement A Simple Database Management System 
 **(You can get more details in https://sites.google.com/site/cs186fall2013/homeworks)**
 
+## Details
 The course consists of four projects that implement four core parts in the database, the code of every project is besed on the former one, so the complete code is in project 4.
 
 **Project 1**
@@ -13,18 +14,10 @@ Implementing the operators. In this project, you will implements a series of dat
 **Project 3**
 Implementing query optimization. In this project, you need to implement the cost-based optimizer. What is most difficult is to use the left-deep-tree and the idea of dynamic programming to implement the `Join` operation optimizer. Once completed, the performance of `Filter`,i.e. the SQL `where` clause, and `Join` operations will be greatly optimized.
 
-
 **project 4**: Implementing transaction management. In this project, you need to implement transaction management of SimpleDB, including using 2PL protocol and NO STEAL/FORCE cache management strategy to enable ACID properties of transaction with page-level locking, and deadlock detection and abortion based on a simple timeout policy or cycle-detection in a dependency graph data structure. Due to the use of NO STEAL/FORCE strategy, the log-based recovery, i.e. undo and redo functions, are omitted.
 
 ## Requirement of the Course
-
-1. The projects require few knowledge of database, but in project 4, you might have to learn some concepts of transaction management through google or relevant books. Also, the references I recommend at the end of this article might help.
-
-2. You need to know the basic grammar of Java, and it would be better if you have learned concurrency in Java (needed in Project 4). Additionally, I change Ant (which is recommended by the course) to Maven, so if you would like to run my code, you will also need to learn some basic concept in Maven (e.g. the use of POM file).
-
-3. It takes about one month to complete the whole four projects.
-
-What is more, when implementing the project 4, it is recommended to learn the concepts about transaction management systematically, especially ACID properties, the priority of read/write lock, 2PL protocol, etc.
+You need to know the basic grammar of Java, and it would be better if you have learned concurrency in Java (needed in Project 4). Additionally, I change Ant (which is recommended by the course) to Maven, so if you would like to run my code, you will also need to learn some basic concept in Maven (e.g. the use of POM file).
 
 ## What I modified
 1. The cache is implemented by double-ended queue, and it uses LRU page replacement algorithm.
